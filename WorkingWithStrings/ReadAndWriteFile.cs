@@ -15,7 +15,7 @@
             if (!File.Exists(path))
                 throw new FieldAccessException("Нет файла!");
             _path = path;
-            _pathFileMail = String.Empty;
+            _pathFileMail = string.Empty;
             _mail = new List<string>();
         }
 
@@ -45,6 +45,7 @@
             if (_mail.Count() == 0)
                 throw new ArgumentException("Пустой список!");
             _pathFileMail = path;
+            File.WriteAllText(_pathFileMail, string.Empty);
             using (var writeFile = new StreamWriter(_pathFileMail, true))
             {
                 foreach (var mail in _mail)
