@@ -12,13 +12,7 @@
  * e-mail возвращается в той же строке s:public string SearchMail (string s)*/
 using WorkingWithStrings;
 
-Console.WriteLine("Hello, World!");
 
-
-
-var str = "Петров Петр Петрович # petr@mail.ru";
-var mail = new SearchMail(str);
-Console.WriteLine(mail);
 
 var list = new List<string>()
 {
@@ -30,15 +24,17 @@ var list = new List<string>()
 var path = "C:\\TestFile.txt";
 CreateFileForProgram(path, list);
 
-StreamFileLine(path);
+PrintLineFile(path);
 
 var pathMail = "C:\\TestFileMail.txt";
 
-var fileReader = new ReadAndWriteFile(path);
-fileReader.ReadFile();
-fileReader.WriteNewFile(pathMail);
+var fileReader = new FinderMail(path);
+var mails = fileReader.SearchMailInFile();
 
-StreamFileLine(fileReader.PathFileMail);
+var fileWrite = new FileLinesToRecord(pathMail);
+fileWrite.WriteLineToFile(mails);
+
+PrintLineFile(pathMail);
 
 void CreateFileForProgram(string path, List<string> date)
 {
@@ -54,18 +50,12 @@ void CreateFileForProgram(string path, List<string> date)
     }
 }
 
-void StreamFileLine(string path)
+void PrintLineFile(string path)
 {
     if (!File.Exists(path))
         throw new FileNotFoundException("Файла нет!");
-    using (var file = new StreamReader(path, true))
+    foreach (string line in File.ReadLines(path))
     {
-        while (true)
-        {
-            var line = file.ReadLine();
-            if (line == null)
-                break;
-            Console.WriteLine(line);
-        }
+        Console.WriteLine(line);
     }
 }
