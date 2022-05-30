@@ -28,7 +28,7 @@ PrintLineFile(path);
 
 var pathMail = "C:\\TestFileMail.txt";
 
-var fileReader = new FinderMail(path);
+var fileReader = new MailFinder(path);
 var mails = fileReader.SearchMailInFile();
 
 var fileWrite = new FileLinesToRecord(pathMail);
