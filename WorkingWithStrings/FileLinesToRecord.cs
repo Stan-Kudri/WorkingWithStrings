@@ -1,4 +1,7 @@
-﻿namespace WorkingWithStrings
+﻿using CsvHelper;
+using System.Globalization;
+
+namespace WorkingWithStrings
 {
     public class FileLinesToRecord
     {
@@ -15,8 +18,20 @@
         {
             if (line.Count() == 0)
                 throw new ArgumentException("Пустой список!");
-            File.WriteAllText(_pathFileMail, string.Empty);
-            File.WriteAllLines(_pathFileMail, line);
+            var mail = new List<Email>();
+
+            foreach (var dateItem in line)
+            {
+                mail.Add(new Email(dateItem));
+            }
+
+            using (var file = new StreamWriter(_pathFileMail, false, System.Text.Encoding.Default))
+            {
+                using (var csv = new CsvWriter(file, CultureInfo.InvariantCulture))
+                {
+                    csv.WriteRecords(mail);
+                }
+            }
         }
     }
 }

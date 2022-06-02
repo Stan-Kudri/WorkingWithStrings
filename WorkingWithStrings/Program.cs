@@ -10,23 +10,25 @@
  * Предусмотреть метод, выделяющий из строки адрес почты.
  * Методу в качестве параметра передается символьная строка s,
  * e-mail возвращается в той же строке s:public string SearchMail (string s)*/
+using CsvHelper;
+using System.Globalization;
 using WorkingWithStrings;
 
 
 
 var list = new List<string>()
 {
-    "Петров Петр Петрович # petr@mail.ru",
-    "Широков Сергей Алексеевич # stan@mail.ru",
-    "Сущевский Дмитрий Вячеславович # XanBaker@mail.ru",
-    "Иванов Иван Иванович # iviviv@mail.ru"
+    "Петров Петр Петрович , petr@mail.ru",
+    "Широков Сергей Алексеевич , stan@mail.ru",
+    "Сущевский Дмитрий Вячеславович , XanBaker@mail.ru",
+    "Иванов Иван Иванович , iviviv@mail.ru"
 };
-var path = "C:\\TestFile.txt";
+var path = "C:\\TestFile.csv";
 CreateFileForProgram(path, list);
 
 PrintLineFile(path);
 
-var pathMail = "C:\\TestFileMail.txt";
+var pathMail = "C:\\TestFileMail.csv";
 
 var fileReader = new MailFinder(path);
 var mails = fileReader.SearchMailInFile();
@@ -38,16 +40,29 @@ PrintLineFile(pathMail);
 
 void CreateFileForProgram(string path, List<string> date)
 {
-    if (!File.Exists(path))
-        File.Create(path);
-    else
-        File.WriteAllText(path, string.Empty);
-
-    using (var file = new StreamWriter(path))
+    var csvDate = new List<UserData>();
+    foreach (var dateItem in date)
     {
-        foreach (var item in date)
-            file.WriteLine(item);
+        csvDate.Add(User(dateItem));
     }
+    using (var file = new StreamWriter(path, false, System.Text.Encoding.Default))
+    {
+        using (var csv = new CsvWriter(file, CultureInfo.InvariantCulture))
+        {
+            csv.WriteRecords(csvDate);
+        }
+    }
+}
+
+UserData User(string str)
+{
+    var array = str.Split(",");
+
+
+    var dateStr = array[0];
+    var mailStr = array[1].Replace(" ", "");
+
+    return new UserData(dateStr, mailStr);
 }
 
 void PrintLineFile(string path)
