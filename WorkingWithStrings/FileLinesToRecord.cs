@@ -14,22 +14,16 @@ namespace WorkingWithStrings
             _pathFileMail = path;
         }
 
-        public void WriteLineToFile(List<string> line)
+        public void WriteLineToFile(List<UserData> line)
         {
             if (line.Count() == 0)
                 throw new ArgumentException("Пустой список!");
-            var mail = new List<Email>();
-
-            foreach (var dateItem in line)
-            {
-                mail.Add(new Email(dateItem));
-            }
 
             using (var file = new StreamWriter(_pathFileMail, false, System.Text.Encoding.Default))
             {
                 using (var csv = new CsvWriter(file, CultureInfo.InvariantCulture))
                 {
-                    csv.WriteRecords(mail);
+                    csv.WriteRecords(line);
                 }
             }
         }
