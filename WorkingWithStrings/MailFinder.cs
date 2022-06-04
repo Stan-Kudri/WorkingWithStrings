@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using CsvHelper.Configuration;
 using System.Globalization;
 
 namespace WorkingWithStrings
@@ -20,7 +21,8 @@ namespace WorkingWithStrings
 
             using (var reader = new StreamReader(_path))
             {
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                var config = new CsvConfiguration(CultureInfo.CurrentCulture) { Delimiter = "#" };
+                using (var csv = new CsvReader(reader, config))
                 {
                     while (csv.Read())
                     {

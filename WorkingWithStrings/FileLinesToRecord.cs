@@ -23,7 +23,11 @@ namespace WorkingWithStrings
             {
                 using (var csv = new CsvWriter(file, CultureInfo.InvariantCulture))
                 {
-                    csv.WriteRecords(line);
+                    foreach (var record in line)
+                    {
+                        csv.WriteField(record.Email);
+                        csv.NextRecord();
+                    }
                 }
             }
         }
