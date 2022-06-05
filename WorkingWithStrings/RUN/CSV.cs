@@ -1,10 +1,11 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
+using WorkingWithStrings.Interface;
 
 namespace WorkingWithStrings.RUN
 {
-    public class CSV
+    public class CSV : IRun
     {
         public void CreateFileForProgram(string path, List<string> date)
         {

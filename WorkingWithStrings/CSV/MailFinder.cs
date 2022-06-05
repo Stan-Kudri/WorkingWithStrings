@@ -1,10 +1,11 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
+using WorkingWithStrings.Interface;
 
 namespace WorkingWithStrings
 {
-    public class MailFinder
+    public class MailFinder : IMailFinder
     {
         private readonly string _path;
 

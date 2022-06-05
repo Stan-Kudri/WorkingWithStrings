@@ -1,6 +1,8 @@
-﻿namespace WorkingWithStrings.TXT
+﻿using WorkingWithStrings.Interface;
+
+namespace WorkingWithStrings.TXT
 {
-    public class MailFiderTxt
+    public class MailFiderTxt : IMailFinder
     {
         private readonly string _path;
 
@@ -11,29 +13,31 @@
             _path = path;
         }
 
-        public List<string> SearchMailInFile()
+        public List<UserData> SearchMailInFile()
         {
-            var mail = new List<string>();
+            var data = new List<UserData>();
 
             foreach (string line in File.ReadLines(_path))
             {
                 var serchMail = SearchMail(line);
-                mail.Add(serchMail);
+                data.Add(serchMail);
             }
 
-            return mail;
+            return data;
         }
 
-        private string SearchMail(string str)
+        private UserData SearchMail(string str)
         {
             var array = str.Split("#");
 
+            var nameStr = array[0].Replace(" ", "");
             var mailStr = array[1].Replace(" ", "");
 
-            if (mailStr != null && mailStr.Count() > 0)
-                return new string(mailStr);
+
+            if (mailStr != null && nameStr != null && mailStr.Count() > 0 && nameStr.Count() > 0)
+                return new UserData(nameStr, mailStr);
             else
-                return string.Empty;
+                return new UserData(string.Empty, string.Empty);
         }
     }
 }

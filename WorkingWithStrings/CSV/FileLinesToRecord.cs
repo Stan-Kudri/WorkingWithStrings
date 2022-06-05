@@ -1,12 +1,13 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
+using WorkingWithStrings.Interface;
 
 namespace WorkingWithStrings
 {
-    public class FileLinesToRecord
+    public class FileLinesToRecord : IFileToRecord
     {
-        private string _pathFileMail;
+        private readonly string _pathFileMail;
 
         public FileLinesToRecord(string path)
         {

@@ -1,6 +1,8 @@
-﻿namespace WorkingWithStrings.RUN
+﻿using WorkingWithStrings.Interface;
+
+namespace WorkingWithStrings.RUN
 {
-    public class TXT
+    public class TXT : IRun
     {
         public void CreateFileForProgram(string path, List<string> date)
         {
