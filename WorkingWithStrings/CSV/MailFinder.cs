@@ -19,15 +19,12 @@ namespace WorkingWithStrings
         {
             var mail = new List<UserData>();
 
-            using (var reader = new StreamReader(_path))
+            using (var reader = new StreamReader(_path, System.Text.Encoding.UTF8))
             {
-                var config = new CsvConfiguration(CultureInfo.CurrentCulture) { Delimiter = "#" };
+                var config = new CsvConfiguration(CultureInfo.CurrentCulture) { Delimiter = "#", Encoding = System.Text.Encoding.UTF8 };
                 using (var csv = new CsvReader(reader, config))
                 {
-                    while (csv.Read())
-                    {
-                        mail.Add(new UserData(csv.GetField<string>(1)));
-                    }
+                    mail = csv.GetRecords<UserData>().ToList();
                 }
             }
 

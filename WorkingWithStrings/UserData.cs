@@ -1,20 +1,20 @@
-﻿namespace WorkingWithStrings
+﻿using CsvHelper.Configuration.Attributes;
+
+namespace WorkingWithStrings
 {
     public class UserData
     {
+        [Name("FullName")]
         public string FullName { get; set; }
+        [Name("Email")]
         public string Email { get; set; }
 
-        public UserData(string email)
+
+        public UserData(string FullName, string Email)
         {
-            Email = email;
-            FullName = string.Empty;
+            this.FullName = FullName;
+            this.Email = Email;
         }
 
-        public UserData(string fullName, string email)
-        {
-            FullName = fullName;
-            Email = email;
-        }
     }
 }
