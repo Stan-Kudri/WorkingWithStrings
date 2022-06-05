@@ -2,6 +2,6 @@
 {
     interface IFileToRecord
     {
-        public void WriteLineToFile(List<UserData> line);
+        public void Write(List<UserData> line);
     }
 }

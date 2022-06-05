@@ -28,15 +28,15 @@ var pathMailCsv = "C:\\TestFileMail.csv";
 var pathTxt = "C:\\TestFile.txt";
 var pathMailTxt = "C:\\TestFileMail.txt";
 
-var csv = new CSV();
-csv.CreateFileForProgram(pathCsv, list);
+var csv = new CsvRun();
+csv.Run(pathCsv, list);
 PrintFile(pathCsv);
 Console.WriteLine();
 RunCsv(pathCsv, pathMailCsv);
 Console.WriteLine();
 
-var txt = new TXT();
-txt.CreateFileForProgram(pathTxt, list);
+var txt = new TxtRun();
+txt.Run(pathTxt, list);
 PrintFile(pathCsv);
 Console.WriteLine();
 RunTxt(pathTxt, pathMailTxt);
@@ -49,21 +49,21 @@ Console.WriteLine();
 
 void RunCsv(string pathCsv, string pathMailCsv)
 {
-    var fileReaderCsv = new MailFinder(pathCsv);
+    var fileReaderCsv = new UserDataReaderCsv(pathCsv);
     var mailsCsv = fileReaderCsv.SearchMailInFile();
 
-    var fileWriteCsv = new FileLinesToRecord(pathMailCsv);
-    fileWriteCsv.WriteLineToFile(mailsCsv);
+    var fileWriteCsv = new UserDataWriterCsv(pathMailCsv);
+    fileWriteCsv.Write(mailsCsv);
     PrintFile(pathMailCsv);
 }
 
 void RunTxt(string pathTxt, string pathMailTxt)
 {
-    var fileReaderTxt = new MailFiderTxt(pathTxt);
+    var fileReaderTxt = new UserDataReaderTxt(pathTxt);
     var mailsTxt = fileReaderTxt.SearchMailInFile();
 
-    var fileWriteTxt = new FileLinesToRecordTxt(pathMailTxt);
-    fileWriteTxt.WriteLineToFile(mailsTxt);
+    var fileWriteTxt = new UserDataWriterTxt(pathMailTxt);
+    fileWriteTxt.Write(mailsTxt);
     PrintFile(pathMailTxt);
 }
 

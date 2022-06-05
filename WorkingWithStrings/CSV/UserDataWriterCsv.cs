@@ -5,16 +5,16 @@ using WorkingWithStrings.Interface;
 
 namespace WorkingWithStrings
 {
-    public class FileLinesToRecord : IFileToRecord
+    public class UserDataWriterCsv : IFileToRecord
     {
         private readonly string _pathFileMail;
 
-        public FileLinesToRecord(string path)
+        public UserDataWriterCsv(string path)
         {
             _pathFileMail = path;
         }
 
-        public void WriteLineToFile(List<UserData> line)
+        public void Write(List<UserData> line)
         {
             if (line.Count() == 0)
                 throw new ArgumentException("Пустой список!");

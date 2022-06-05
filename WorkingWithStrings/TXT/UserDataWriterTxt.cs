@@ -2,16 +2,16 @@
 
 namespace WorkingWithStrings.TXT
 {
-    public class FileLinesToRecordTxt : IFileToRecord
+    public class UserDataWriterTxt : IFileToRecord
     {
         private readonly string _pathFileMail;
 
-        public FileLinesToRecordTxt(string path)
+        public UserDataWriterTxt(string path)
         {
             _pathFileMail = path;
         }
 
-        public void WriteLineToFile(List<UserData> line)
+        public void Write(List<UserData> line)
         {
             if (line.Count() == 0)
                 throw new ArgumentException("Пустой список!");

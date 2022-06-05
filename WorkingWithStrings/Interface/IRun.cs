@@ -2,6 +2,6 @@
 {
     interface IRun
     {
-        public void CreateFileForProgram(string path, List<string> date);
+        public void Run(string path, List<string> date);
     }
 }

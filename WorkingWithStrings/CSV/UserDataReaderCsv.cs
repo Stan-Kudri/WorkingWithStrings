@@ -5,11 +5,11 @@ using WorkingWithStrings.Interface;
 
 namespace WorkingWithStrings
 {
-    public class MailFinder : IMailFinder
+    public class UserDataReaderCsv : IMailFinder
     {
         private readonly string _path;
 
-        public MailFinder(string path)
+        public UserDataReaderCsv(string path)
         {
             if (!File.Exists(path))
                 throw new FieldAccessException("Нет файла!");

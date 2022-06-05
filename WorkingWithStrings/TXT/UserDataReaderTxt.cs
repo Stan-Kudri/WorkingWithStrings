@@ -2,11 +2,11 @@
 
 namespace WorkingWithStrings.TXT
 {
-    public class MailFiderTxt : IMailFinder
+    public class UserDataReaderTxt : IMailFinder
     {
         private readonly string _path;
 
-        public MailFiderTxt(string path)
+        public UserDataReaderTxt(string path)
         {
             if (!File.Exists(path))
                 throw new FieldAccessException("Нет файла!");

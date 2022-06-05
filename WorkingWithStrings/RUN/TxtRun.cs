@@ -2,9 +2,9 @@
 
 namespace WorkingWithStrings.RUN
 {
-    public class TXT : IRun
+    public class TxtRun : IRun
     {
-        public void CreateFileForProgram(string path, List<string> date)
+        public void Run(string path, List<string> date)
         {
             var csvDate = new List<UserData>();
             foreach (var dateItem in date)
