@@ -12,7 +12,6 @@
  * e-mail возвращается в той же строке s:public string SearchMail (string s)*/
 using WorkingWithStrings;
 using WorkingWithStrings.RUN;
-using WorkingWithStrings.TXT;
 
 var list = new List<string>()
 {
@@ -28,51 +27,64 @@ var pathMailCsv = "C:\\TestFileMail.csv";
 var pathTxt = "C:\\TestFile.txt";
 var pathMailTxt = "C:\\TestFileMail.txt";
 
-var csv = new CsvRun();
-csv.Run(pathCsv, list);
+WriteFileToRunProgram(pathCsv, list);
 PrintFile(pathCsv);
-Console.WriteLine();
-RunCsv(pathCsv, pathMailCsv);
-Console.WriteLine();
 
-var txt = new TxtRun();
-txt.Run(pathTxt, list);
-PrintFile(pathCsv);
-Console.WriteLine();
-RunTxt(pathTxt, pathMailTxt);
-Console.WriteLine();
+WriteFileToRunProgram(pathTxt, list);
+PrintFile(pathTxt);
 
+//Чтение файла Csv и запись в переменную dataCsv списка типа <UserData>.
+var readCsv = new UserDataOperationFactory(pathCsv).CreateReader();
+var dataCsv = readCsv.SearchMailInFile();
 
+//Запись списка типа <UserData> в файл по пути  pathMailCsv и вывод на печать c этого файла.  
+var writeCsv = new UserDataOperationFactory(pathMailCsv).CreateWriter();
+writeCsv.Write(dataCsv);
+PrintFile(pathMailCsv);
 
+//Чтение файла Csv и запись в переменную dataTxt списка типа <UserData> с помощью метода.
+var data = DateFileToRead(pathTxt);
+//Запись списка типа <UserData> в файл по пути pathMailTxt.
+WriteFile(pathMailTxt, data);
+//Печать файла по пути pathMailCsv.
+PrintFile(pathMailTxt);
 
-
-
-void RunCsv(string pathCsv, string pathMailCsv)
-{
-    var fileReaderCsv = new UserDataReaderCsv(pathCsv);
-    var mailsCsv = fileReaderCsv.SearchMailInFile();
-
-    var fileWriteCsv = new UserDataWriterCsv(pathMailCsv);
-    fileWriteCsv.Write(mailsCsv);
-    PrintFile(pathMailCsv);
-}
-
-void RunTxt(string pathTxt, string pathMailTxt)
-{
-    var fileReaderTxt = new UserDataReaderTxt(pathTxt);
-    var mailsTxt = fileReaderTxt.SearchMailInFile();
-
-    var fileWriteTxt = new UserDataWriterTxt(pathMailTxt);
-    fileWriteTxt.Write(mailsTxt);
-    PrintFile(pathMailTxt);
-}
 
 void PrintFile(string path)
 {
     if (!File.Exists(path))
         throw new FileNotFoundException("Файла нет!");
-    foreach (string line in File.ReadLines(path))
+
+    Console.WriteLine($"Вывод строк файла, по пути {path}");
+
+    Console.WriteLine(string.Join("\n", File.ReadLines(path)) + "\n");
+}
+
+void WriteFileToRunProgram(string path, List<string> list)
+{
+    var type = Path.GetExtension(path);
+
+    switch (type)
     {
-        Console.WriteLine(line);
+        case ".csv":
+            new CsvRun().Run(path, list);
+            return;
+        case ".txt":
+            new TxtRun().Run(path, list);
+            return;
     }
+
+    throw new TypeAccessException("Несогласованность типа файла!");
+}
+
+List<UserData> DateFileToRead(string path)
+{
+    var readCsv = new UserDataOperationFactory(pathCsv).CreateReader();
+    return readCsv.SearchMailInFile();
+}
+
+void WriteFile(string path, List<UserData> data)
+{
+    var writeCsv = new UserDataOperationFactory(path).CreateWriter();
+    writeCsv.Write(data);
 }

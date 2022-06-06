@@ -1,6 +1,6 @@
 ﻿namespace WorkingWithStrings.Interface
 {
-    interface IFileToRecord
+    public interface IUserDataWriter
     {
         public void Write(List<UserData> line);
     }

@@ -5,7 +5,7 @@ using WorkingWithStrings.Interface;
 
 namespace WorkingWithStrings
 {
-    public class UserDataReaderCsv : IMailFinder
+    public class UserDataReaderCsv : IUserDataReader
     {
         private readonly string _path;
 

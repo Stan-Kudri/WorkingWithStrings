@@ -2,7 +2,7 @@
 
 namespace WorkingWithStrings.TXT
 {
-    public class UserDataReaderTxt : IMailFinder
+    public class UserDataReaderTxt : IUserDataReader
     {
         private readonly string _path;
 

@@ -5,7 +5,7 @@ using WorkingWithStrings.Interface;
 
 namespace WorkingWithStrings
 {
-    public class UserDataWriterCsv : IFileToRecord
+    public class UserDataWriterCsv : IUserDataWriter
     {
         private readonly string _pathFileMail;
 

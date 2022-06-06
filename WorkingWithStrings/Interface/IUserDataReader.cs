@@ -1,6 +1,6 @@
 ﻿namespace WorkingWithStrings.Interface
 {
-    interface IMailFinder
+    public interface IUserDataReader
     {
         public List<UserData> SearchMailInFile();
     }

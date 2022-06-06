@@ -2,7 +2,7 @@
 
 namespace WorkingWithStrings.TXT
 {
-    public class UserDataWriterTxt : IFileToRecord
+    public class UserDataWriterTxt : IUserDataWriter
     {
         private readonly string _pathFileMail;
 
