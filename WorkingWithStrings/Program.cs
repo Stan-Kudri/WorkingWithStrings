@@ -10,8 +10,10 @@
  * Предусмотреть метод, выделяющий из строки адрес почты.
  * Методу в качестве параметра передается символьная строка s,
  * e-mail возвращается в той же строке s:public string SearchMail (string s)*/
+using CsvHelper;
+using CsvHelper.Configuration;
+using System.Globalization;
 using WorkingWithStrings;
-using WorkingWithStrings.RUN;
 
 var list = new List<string>()
 {
@@ -27,10 +29,10 @@ var pathMailCsv = "C:\\TestFileMail.csv";
 var pathTxt = "C:\\TestFile.txt";
 var pathMailTxt = "C:\\TestFileMail.txt";
 
-WriteFileToRunProgram(pathCsv, list);
+Run(pathCsv, list);
 PrintFile(pathCsv);
 
-WriteFileToRunProgram(pathTxt, list);
+Run(pathTxt, list);
 PrintFile(pathTxt);
 
 //Чтение файла Csv и запись в переменную dataCsv списка типа <UserData>.
@@ -60,21 +62,52 @@ void PrintFile(string path)
     Console.WriteLine(string.Join("\n", File.ReadLines(path)) + "\n");
 }
 
-void WriteFileToRunProgram(string path, List<string> list)
+void Run(string path, List<string> data)
 {
     var type = Path.GetExtension(path);
 
     switch (type)
     {
         case ".csv":
-            new CsvRun().Run(path, list);
+            var userData = new List<UserData>(ListConversion(data));
+
+            using (var file = new StreamWriter(path, false, System.Text.Encoding.UTF8))
+            {
+                var config = new CsvConfiguration(CultureInfo.CurrentCulture) { Delimiter = "#", Encoding = System.Text.Encoding.UTF8 };
+                using (var csv = new CsvWriter(file, config))
+                {
+                    csv.WriteRecords(userData);
+                }
+            }
             return;
+
         case ".txt":
-            new TxtRun().Run(path, list);
+            File.WriteAllLines(path, data);
             return;
     }
 
     throw new TypeAccessException("Несогласованность типа файла!");
+}
+
+List<UserData> ListConversion(List<string> data)
+{
+    var userData = new List<UserData>();
+
+    foreach (var dateItem in data)
+    {
+        userData.Add(FromString(dateItem, "#"));
+    }
+    return userData;
+}
+
+static UserData FromString(string data, string separator = ",")
+{
+    var array = data.Split(separator);
+
+    var dateStr = array[0];
+    var mailStr = array[1].Replace(" ", "");
+
+    return new UserData(dateStr, mailStr);
 }
 
 List<UserData> DateFileToRead(string path)

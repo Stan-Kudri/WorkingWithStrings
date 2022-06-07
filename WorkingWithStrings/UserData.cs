@@ -16,5 +16,9 @@ namespace WorkingWithStrings
             this.Email = Email;
         }
 
+        public override string ToString()
+        {
+            return $"{FullName}#{Email}";
+        }
     }
 }
