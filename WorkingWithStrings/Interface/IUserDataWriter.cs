@@ -2,6 +2,8 @@
 {
     public interface IUserDataWriter
     {
-        public void Write(List<UserData> line);
+        public void WriteMail(List<UserData> line);
+
+        public void WriteAllData(List<string> data);
     }
 }
