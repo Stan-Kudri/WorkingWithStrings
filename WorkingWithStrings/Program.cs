@@ -12,41 +12,15 @@
  * e-mail возвращается в той же строке s:public string SearchMail (string s)*/
 using WorkingWithStrings;
 
-var list = new List<string>()
-{
-    "Петров Петр Петрович # petr@mail.ru",
-    "Широков Сергей Алексеевич # stan@mail.ru",
-    "Сущевский Дмитрий Вячеславович # XanBaker@mail.ru",
-    "Иванов Иван Иванович # iviviv@mail.ru"
-};
-
-var pathCsv = "C:\\TestFile.csv";
 var pathMailCsv = "C:\\TestFileMail.csv";
-
-var pathTxt = "C:\\TestFile.txt";
 var pathMailTxt = "C:\\TestFileMail.txt";
 
-Run(pathCsv, list);
-PrintFile(pathCsv);
+var pathTxt = "C:\\TestFile.txt";
+var pathCsv = "C:\\TestFile.csv";
 
-Run(pathTxt, list);
-PrintFile(pathTxt);
+Run(pathCsv, pathMailCsv);
+Run(pathTxt, pathMailTxt);
 
-//Чтение файла Csv и запись в переменную dataCsv списка типа <UserData>.
-var readCsv = new UserDataOperationFactory(pathCsv).CreateReader();
-var dataCsv = readCsv.SearchMailInFile();
-
-//Запись списка типа <UserData> в файл по пути  pathMailCsv и вывод на печать c этого файла.  
-var writeCsv = new UserDataOperationFactory(pathMailCsv).CreateWriter();
-writeCsv.WriteMail(dataCsv);
-PrintFile(pathMailCsv);
-
-//Чтение файла Csv и запись в переменную dataTxt списка типа <UserData> с помощью метода.
-var data = DateFileToRead(pathTxt);
-//Запись списка типа <UserData> в файл по пути pathMailTxt.
-WriteFile(pathMailTxt, data);
-//Печать файла по пути pathMailCsv.
-PrintFile(pathMailTxt);
 
 
 void PrintFile(string path)
@@ -59,22 +33,31 @@ void PrintFile(string path)
     Console.WriteLine(string.Join("\n", File.ReadLines(path)) + "\n");
 }
 
-List<UserData> DateFileToRead(string path)
-{
-    var readCsv = new UserDataOperationFactory(pathCsv).CreateReader();
-    return readCsv.SearchMailInFile();
-}
 
-void WriteFile(string path, List<UserData> data)
+void Run(string path, string pathMail)
 {
-    var writeCsv = new UserDataOperationFactory(path).CreateWriter();
-    writeCsv.WriteMail(data);
-}
+    var data = new List<string>()
+{
+    "Петров Петр Петрович # petr@mail.ru",
+    "Широков Сергей Алексеевич # stan@mail.ru",
+    "Сущевский Дмитрий Вячеславович # XanBaker@mail.ru",
+    "Иванов Иван Иванович # iviviv@mail.ru"
+};
 
-void Run(string path, List<string> data)
-{
+
     var userData = new UserDataOperationFactory(path);
 
     userData.CreateWriter().WriteAllData(data);
-}
 
+    //Чтение файла и запись в переменную dataFile списка типа <UserData>.
+    var read = new UserDataOperationFactory(path).CreateReader();
+    var dataFile = read.SearchMailInFile();
+
+    PrintFile(path);
+
+    //Запись списка типа <UserData> в файл по пути  pathMailCsv и вывод на печать c этого файла.
+    var writeFile = new UserDataOperationFactory(pathMail).CreateWriter();
+    writeFile.WriteMail(dataFile);
+
+    PrintFile(pathMail);
+}
