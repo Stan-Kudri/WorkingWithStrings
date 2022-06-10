@@ -36,28 +36,42 @@ void PrintFile(string path)
 
 void Run(string path, string pathMail)
 {
+    if (!ValidFileTypes(path) && !ValidFileTypes(pathMail))
+        throw new FileLoadException("Типы файлов не верного формата!");
+
     var data = new List<string>()
-{
+    {
     "Петров Петр Петрович # petr@mail.ru",
     "Широков Сергей Алексеевич # stan@mail.ru",
     "Сущевский Дмитрий Вячеславович # XanBaker@mail.ru",
     "Иванов Иван Иванович # iviviv@mail.ru"
-};
+    };
 
 
-    var userData = new UserDataOperationFactory(path);
+    var firstFileOperation = new UserDataOperationFactory(path);
 
-    userData.CreateWriter().WriteAllData(data);
+    firstFileOperation.CreateWriter().WriteAllData(data);
 
     //Чтение файла и запись в переменную dataFile списка типа <UserData>.
-    var read = new UserDataOperationFactory(path).CreateReader();
-    var dataFile = read.SearchMailInFile();
+    var readFile = firstFileOperation.CreateReader();
+    var dataFile = readFile.SearchMailInFile();
 
     PrintFile(path);
 
     //Запись списка типа <UserData> в файл по пути  pathMailCsv и вывод на печать c этого файла.
-    var writeFile = new UserDataOperationFactory(pathMail).CreateWriter();
+    var secondFileOperationeFile = new UserDataOperationFactory(pathMail);
+    var writeFile = secondFileOperationeFile.CreateWriter();
     writeFile.WriteMail(dataFile);
 
     PrintFile(pathMail);
+}
+
+bool ValidFileTypes(string path)
+{
+    var type = new List<string> { ".csv", ".txt" };
+    var typeFile = Path.GetExtension(path);
+
+    if (type.Any(x => x == typeFile))
+        return true;
+    return false;
 }
