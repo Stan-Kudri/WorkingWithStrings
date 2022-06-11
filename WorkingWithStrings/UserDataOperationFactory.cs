@@ -11,6 +11,8 @@ namespace WorkingWithStrings
         {
             if (path == null)
                 throw new ArgumentNullException("Пустая строка!");
+            if (!ValidFileTypes(path))
+                throw new FileLoadException("Типы файлов не верного формата!");
             _path = path;
         }
 
@@ -42,6 +44,15 @@ namespace WorkingWithStrings
             }
 
             throw new TypeAccessException("Несогласованность типа файла!");
+        }
+        private bool ValidFileTypes(string path)
+        {
+            var type = new List<string> { ".csv", ".txt" };
+            var typeFile = Path.GetExtension(path);
+
+            if (type.Any(x => x == typeFile))
+                return true;
+            return false;
         }
     }
 }
