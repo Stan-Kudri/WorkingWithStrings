@@ -37,7 +37,7 @@ void PrintFile(string path)
 void Run(string path, string pathMail)
 {
     if (path == null || pathMail == null)
-        throw new StringNullException("Пустота строк");
+        throw new ArgumentNullException("Пустота строк");
 
     var data = new List<string>()
     {

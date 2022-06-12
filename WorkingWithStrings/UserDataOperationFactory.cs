@@ -10,9 +10,9 @@ namespace WorkingWithStrings
         public UserDataOperationFactory(string path)
         {
             if (path == null)
-                throw new StringNullException("Пустая строка");
+                throw new ArgumentNullException("Пустая строка");
             if (!ValidFileTypes(path))
-                throw new TypeAccessException("Типы файлов не верного формата");
+                throw new ArgumentException("Типы файлов не верного формата");
             _path = path;
         }
 
@@ -28,7 +28,7 @@ namespace WorkingWithStrings
                     return new UserDataWriterTxt(_path);
             }
 
-            throw new PathException("Несогласованность типа файла");
+            throw new InvalidExtensionException("Несогласованность типа файла");
         }
 
         public IUserDataReader CreateReader()
@@ -43,7 +43,7 @@ namespace WorkingWithStrings
                     return new UserDataReaderTxt(_path);
             }
 
-            throw new PathException("Несогласованность типа файла");
+            throw new InvalidExtensionException("Несогласованность типа файла");
         }
         private bool ValidFileTypes(string path)
         {
