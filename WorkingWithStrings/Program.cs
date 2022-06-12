@@ -26,7 +26,7 @@ Run(pathTxt, pathMailTxt);
 void PrintFile(string path)
 {
     if (!File.Exists(path))
-        throw new FileNotFoundException("Файла нет!");
+        throw new FileNotFoundException("Файла нет");
 
     Console.WriteLine($"Вывод строк файла, по пути {path}");
 
@@ -37,7 +37,7 @@ void PrintFile(string path)
 void Run(string path, string pathMail)
 {
     if (path == null || pathMail == null)
-        throw new FileLoadException("NUll!!");
+        throw new StringNullException("Пустота строк");
 
     var data = new List<string>()
     {
