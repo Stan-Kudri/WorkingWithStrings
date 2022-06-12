@@ -1,4 +1,5 @@
-﻿using WorkingWithStrings.Interface;
+﻿using WorkingWithStrings.Exception;
+using WorkingWithStrings.Interface;
 using WorkingWithStrings.TXT;
 
 namespace WorkingWithStrings
@@ -28,7 +29,7 @@ namespace WorkingWithStrings
                     return new UserDataWriterTxt(_path);
             }
 
-            throw new InvalidExtensionException("Несогласованность типа файла");
+            throw new ExtensionException("Несогласованность типа файла");
         }
 
         public IUserDataReader CreateReader()
@@ -43,7 +44,7 @@ namespace WorkingWithStrings
                     return new UserDataReaderTxt(_path);
             }
 
-            throw new InvalidExtensionException("Несогласованность типа файла");
+            throw new ExtensionException("Несогласованность типа файла");
         }
         private bool ValidFileTypes(string path)
         {
