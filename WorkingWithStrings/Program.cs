@@ -66,4 +66,7 @@ void Run(string path, string pathMail)
     writeFileMail.WriteMail(dataFile);
 
     PrintFile(pathMail);
+
+    var pathnew = "C:\\TestFile.dvg";
+    var user = new UserDataOperationFactory(pathnew);
 }
