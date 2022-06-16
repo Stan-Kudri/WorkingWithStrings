@@ -1,4 +1,5 @@
-﻿using WorkingWithStrings.Interface;
+﻿using WorkingWithStrings.Exception;
+using WorkingWithStrings.Interface;
 using WorkingWithStrings.TXT;
 
 namespace WorkingWithStrings
@@ -21,20 +22,30 @@ namespace WorkingWithStrings
         {
             var type = Path.GetExtension(_path);
 
-            if (type == ".csv")
-                return new UserDataWriterCsv(_path);
-            else
-                return new UserDataWriterTxt(_path);
+            switch (type)
+            {
+                case ".csv":
+                    return new UserDataWriterCsv(_path);
+                case ".txt":
+                    return new UserDataWriterTxt(_path);
+            }
+
+            throw new NotSupportedExtensionException("Несогласованность типа файла");
         }
 
         public IUserDataReader CreateReader()
         {
             var type = Path.GetExtension(_path);
 
-            if (type == ".csv")
-                return new UserDataReaderCsv(_path);
-            else
-                return new UserDataReaderTxt(_path);
+            switch (type)
+            {
+                case ".csv":
+                    return new UserDataReaderCsv(_path);
+                case ".txt":
+                    return new UserDataReaderTxt(_path);
+            }
+
+            throw new NotSupportedExtensionException("Несогласованность типа файла");
         }
 
         private bool ValidFileTypes(string path)
