@@ -30,7 +30,7 @@ namespace WorkingWithStrings
                     return new UserDataWriterTxt(_path);
             }
 
-            throw new NotSupportedExtensionException($"Несогласованность типа файла. \nДоступные типы:  {string.Join("; ", _type)}");
+            throw new NotSupportedExtensionException($"Доступные типы:  {string.Join("; ", _type)}");
         }
 
         public IUserDataReader CreateReader()
@@ -45,7 +45,8 @@ namespace WorkingWithStrings
                     return new UserDataReaderTxt(_path);
             }
 
-            throw new NotSupportedExtensionException($"Несогласованность типа файла. \nДоступные типы:  {string.Join("; ", _type)}");
+            throw new NotSupportedExtensionException($"Доступные типы:  {string.Join("; ", _type)}");
+
         }
 
         private bool ValidFileTypes(string path)
